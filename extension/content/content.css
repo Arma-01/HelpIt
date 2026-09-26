@@ -1,0 +1,15 @@
+/**
+ * Content Script Styles
+ * Enhances ERP table rows modified by the AI Attendance ERP Assistant.
+ */
+
+tr.row-ai-applied {
+  background-color: #f0f9ff !important; /* Soft sky-blue tint */
+  transition: background-color 0.4s ease, border-left 0.3s ease;
+  border-left: 3px solid #0284c7 !important;
+}
+
+tr.row-ai-applied td.col-status-control select {
+  border-color: #0284c7 !important;
+  box-shadow: 0 0 0 1px rgba(2, 132, 199, 0.25) !important;
+}

@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "Attendance AI — ERP Assistant",
+  "version": "1.0.0",
+  "description": "AI-ready attendance assistant for classroom ERP systems. Reads class roster, verifies matching, and applies attendance records for teacher review.",
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Attendance AI Assistant",
+    "default_icon": {
+      "16": "assets/icon16.png",
+      "32": "assets/icon32.png",
+      "48": "assets/icon48.png",
+      "128": "assets/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background/service-worker.js"
+  },
+  "permissions": [
+    "activeTab"
+  ],
+  "host_permissions": [
+    "http://localhost/*",
+    "http://127.0.0.1/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://localhost/*",
+        "http://127.0.0.1/*"
+      ],
+      "js": [
+        "content/adapters/erp-adapter.js",
+        "content/adapters/mock-erp-adapter.js",
+        "content/content.js"
+      ],
+      "css": [
+        "content/content.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "assets/icon16.png",
+    "32": "assets/icon32.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  }
+}

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance AI — ERP Assistant</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+          </svg>
+        </div>
+        <div class="brand-info">
+          <h1 class="brand-title">Attendance AI</h1>
+          <span class="brand-subtitle">ERP Assistant</span>
+        </div>
+      </div>
+      <div class="header-badge" id="version-tag">Phase 1</div>
+    </header>
+
+    <!-- Notification / Toast Banner -->
+    <div id="status-banner" class="status-banner hidden" role="alert">
+      <span class="banner-icon" id="banner-icon">ℹ</span>
+      <span class="banner-message" id="banner-message">Status message</span>
+    </div>
+
+    <!-- ERP Connection Card -->
+    <section class="section-card erp-status-card" id="erp-status-section">
+      <div class="status-header">
+        <span class="section-label">ERP Status</span>
+        <div class="status-pill status-checking" id="connection-pill">
+          <span class="status-dot"></span>
+          <span class="status-text" id="connection-text">Checking ERP...</span>
+        </div>
+      </div>
+      <div class="erp-details" id="erp-details-box">
+        <span class="erp-hint-text" id="erp-hint-text">Detecting active classroom ERP page...</span>
+      </div>
+    </section>
+
+    <!-- Attendance Image Upload Section -->
+    <section class="section-card upload-card" id="upload-section">
+      <div class="upload-header">
+        <span class="section-label">Attendance Image</span>
+      </div>
+
+      <!-- Hidden native file input -->
+      <input type="file" id="file-input" accept="image/jpeg,image/png,image/jpg,image/webp" class="hidden-file-input">
+
+      <!-- State A: Empty / No Image Selected Dropzone -->
+      <div class="upload-dropzone" id="dropzone-box">
+        <button type="button" class="btn btn-upload" id="btn-upload-trigger">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          <span>Upload Image</span>
+        </button>
+        <span class="upload-support-text">Supported: JPG / JPEG / PNG</span>
+      </div>
+
+      <!-- State B: Image Preview Container (Hidden initially) -->
+      <div class="preview-container hidden" id="preview-box">
+        <div class="preview-frame" id="preview-frame">
+          <img id="preview-image" alt="Attendance Sheet Preview" src="">
+        </div>
+        <div class="preview-info-row">
+          <span class="preview-filename" id="preview-filename">attendance.jpg</span>
+          <button type="button" class="btn-text-action" id="btn-change-image">Change Image</button>
+        </div>
+      </div>
+
+      <!-- Process Attendance Button -->
+      <div class="upload-action-box">
+        <button type="button" class="btn btn-primary" id="btn-process-attendance" disabled>
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <span>Process Attendance</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Processing State Section (Hidden initially) -->
+    <section class="section-card processing-card hidden" id="processing-section">
+      <div class="processing-content">
+        <div class="processing-spinner">
+          <svg viewBox="0 0 50 50" class="spinner-svg">
+            <circle class="spinner-path" cx="25" cy="25" r="20" fill="none" stroke-width="4"></circle>
+          </svg>
+        </div>
+        <h2 class="processing-title">Processing attendance...</h2>
+        <p class="processing-subtitle">Analyzing image</p>
+        <p class="processing-note">Please wait.</p>
+      </div>
+    </section>
+
+    <!-- Attendance Result Section (Hidden initially) -->
+    <section class="section-card result-card hidden" id="result-section">
+      <div class="result-header">
+        <div>
+          <span class="section-label">Attendance Result</span>
+          <div class="result-records-text" id="result-records-count">0 records detected</div>
+        </div>
+        <span class="badge-phase">AI Extracted</span>
+      </div>
+
+      <!-- Result Breakdown Stats Grid -->
+      <div class="stats-grid result-stats-grid">
+        <div class="stat-box stat-present">
+          <span class="stat-number" id="res-present">0</span>
+          <span class="stat-name">Present</span>
+        </div>
+        <div class="stat-box stat-absent">
+          <span class="stat-number" id="res-absent">0</span>
+          <span class="stat-name">Absent</span>
+        </div>
+        <div class="stat-box stat-late">
+          <span class="stat-number" id="res-late">0</span>
+          <span class="stat-name">Late</span>
+        </div>
+        <div class="stat-box stat-unknown">
+          <span class="stat-number" id="res-unknown">0</span>
+          <span class="stat-name">Unknown</span>
+        </div>
+      </div>
+
+      <!-- Detected Attendance List -->
+      <div class="detected-roster-box">
+        <div class="detected-roster-header">
+          <span class="section-label">Detected Attendance</span>
+        </div>
+        <ul class="detected-roster-list" id="detected-roster-list">
+          <!-- Populated dynamically -->
+        </ul>
+      </div>
+
+      <!-- Process Again Action -->
+      <div class="result-action-box">
+        <button type="button" class="btn btn-outline" id="btn-process-again">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="1 4 1 10 7 10"></polyline>
+            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+          </svg>
+          <span>Process Again</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Safety Footer -->
+    <footer class="app-footer">
+      <div class="safety-indicator">
+        <svg class="safety-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
+        <span>Phase 1: AI Result inspection only. Mock ERP fields remain unchanged.</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Load API Client followed by Popup Logic -->
+  <script src="../utils/api-client.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

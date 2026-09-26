@@ -1,0 +1,698 @@
+/**
+ * Attendance AI Extension - Popup Stylesheet
+ * Clean, professional, education-grade theme.
+ * White background, sky-blue primary accents, dark slate typography.
+ */
+
+:root {
+  --color-primary: #0284c7;       /* Sky-blue 600 */
+  --color-primary-light: #e0f2fe; /* Sky-blue 100 */
+  --color-primary-bg: #f0f9ff;    /* Sky-blue 50 */
+  --color-primary-hover: #0369a1; /* Sky-blue 700 */
+
+  --color-bg-app: #ffffff;
+  --color-bg-card: #f8fafc;
+  --color-bg-input: #ffffff;
+
+  --color-border: #e2e8f0;
+  --color-border-subtle: #edf2f7;
+
+  --color-text-main: #0f172a;     /* Slate 900 */
+  --color-text-muted: #64748b;    /* Slate 500 */
+  --color-text-light: #94a3b8;    /* Slate 400 */
+
+  --color-success: #16a34a;       /* Green 600 */
+  --color-success-bg: #f0fdf4;
+  --color-danger: #dc2626;        /* Red 600 */
+  --color-danger-bg: #fef2f2;
+  --color-warning: #d97706;       /* Amber 600 */
+  --color-warning-bg: #fffbeb;
+  --color-neutral: #64748b;
+  --color-neutral-bg: #f1f5f9;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 440px;
+  min-height: 520px;
+  background-color: var(--color-bg-app);
+  color: var(--color-text-main);
+  font-family: var(--font-family);
+  font-size: 13px;
+  line-height: 1.45;
+  overflow-x: hidden;
+}
+
+.popup-container {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 12px;
+}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-primary);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.brand-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.brand-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text-main);
+  line-height: 1.15;
+}
+
+.brand-subtitle {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-primary);
+  letter-spacing: 0.2px;
+}
+
+.header-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+/* ==========================================================================
+   Status Banner (Notifications & Alerts)
+   ========================================================================== */
+.status-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  font-size: 12px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.status-banner.banner-success {
+  background-color: var(--color-success-bg);
+  border: 1px solid #bbf7d0;
+  color: #15803d;
+}
+
+.status-banner.banner-error {
+  background-color: var(--color-danger-bg);
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+}
+
+.status-banner.banner-info {
+  background-color: var(--color-primary-bg);
+  border: 1px solid #bae6fd;
+  color: var(--color-primary-hover);
+}
+
+.banner-icon {
+  font-weight: bold;
+}
+
+/* ==========================================================================
+   Section Cards
+   ========================================================================== */
+.section-card {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   ERP Status Card
+   ========================================================================== */
+.status-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.status-connected {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+}
+.status-connected .status-dot {
+  background-color: var(--color-success);
+}
+
+.status-disconnected {
+  background-color: var(--color-neutral-bg);
+  color: var(--color-text-muted);
+}
+.status-disconnected .status-dot {
+  background-color: var(--color-text-light);
+}
+
+.status-checking {
+  background-color: var(--color-warning-bg);
+  color: var(--color-warning);
+}
+.status-checking .status-dot {
+  background-color: var(--color-warning);
+}
+
+.erp-hint-text {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   Image Upload Section
+   ========================================================================== */
+.hidden-file-input {
+  display: none;
+}
+
+.upload-card {
+  gap: 10px;
+}
+
+.upload-dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 18px 12px;
+  border: 1px dashed #cbd5e1;
+  border-radius: var(--radius-md);
+  background-color: #ffffff;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.upload-dropzone:hover {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-bg);
+}
+
+.btn-upload {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  padding: 8px 16px;
+  font-size: 12px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  font-weight: 600;
+  transition: background-color 0.15s ease;
+}
+
+.btn-upload:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.upload-support-text {
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   Image Preview Box
+   ========================================================================== */
+.preview-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 10px;
+}
+
+.preview-frame {
+  width: 100%;
+  height: 130px;
+  background-color: #0f172a;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-frame img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.preview-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 4px;
+}
+
+.preview-filename {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-main);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 250px;
+}
+
+.btn-text-action {
+  background: none;
+  border: none;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-primary);
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: var(--radius-sm);
+}
+
+.btn-text-action:hover {
+  text-decoration: underline;
+  color: var(--color-primary-hover);
+}
+
+.upload-action-box {
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   Processing State Card
+   ========================================================================== */
+.processing-card {
+  padding: 24px 16px;
+  text-align: center;
+  background-color: #ffffff;
+  border: 1px solid #bae6fd;
+}
+
+.processing-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.processing-spinner {
+  width: 38px;
+  height: 38px;
+  margin-bottom: 6px;
+}
+
+.spinner-svg {
+  animation: rotate 1.8s linear infinite;
+  width: 100%;
+  height: 100%;
+}
+
+.spinner-path {
+  stroke: var(--color-primary);
+  stroke-linecap: round;
+  animation: dash 1.4s ease-in-out infinite;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
+}
+
+.processing-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text-main);
+}
+
+.processing-subtitle {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.processing-note {
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   Attendance Result Card
+   ========================================================================== */
+.result-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.result-records-text {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text-main);
+}
+
+.badge-phase {
+  font-size: 10px;
+  font-weight: 600;
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+}
+
+.result-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.stat-box {
+  background-color: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 6px 4px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-number {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.stat-name {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.stat-present {
+  border-top: 2px solid var(--color-success);
+}
+.stat-present .stat-number {
+  color: var(--color-success);
+}
+
+.stat-absent {
+  border-top: 2px solid var(--color-danger);
+}
+.stat-absent .stat-number {
+  color: var(--color-danger);
+}
+
+.stat-late {
+  border-top: 2px solid var(--color-warning);
+}
+.stat-late .stat-number {
+  color: var(--color-warning);
+}
+
+.stat-unknown {
+  border-top: 2px solid var(--color-neutral);
+}
+.stat-unknown .stat-number {
+  color: var(--color-neutral);
+}
+
+/* Detected Roster List */
+.detected-roster-box {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.detected-roster-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.detected-roster-list {
+  list-style: none;
+  max-height: 155px;
+  overflow-y: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: #ffffff;
+}
+
+.detected-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 8px;
+  border-bottom: 1px solid var(--color-border-subtle);
+  font-size: 12px;
+}
+
+.detected-item:last-child {
+  border-bottom: none;
+}
+
+.detected-student-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.detected-roll {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  width: 32px;
+  flex-shrink: 0;
+}
+
+.detected-name {
+  color: var(--color-text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+}
+
+.detected-badges {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.roster-badge {
+  font-size: 9px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+.badge-present {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.badge-absent {
+  background-color: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+
+.badge-late {
+  background-color: var(--color-warning-bg);
+  color: var(--color-warning);
+}
+
+.badge-unknown {
+  background-color: var(--color-neutral-bg);
+  color: var(--color-neutral);
+}
+
+.confidence-pill {
+  font-size: 9px;
+  color: var(--color-text-light);
+  font-weight: 500;
+  padding: 1px 4px;
+}
+
+.result-action-box {
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   Buttons & Actions
+   ========================================================================== */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 9px 14px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+  border: 1px solid transparent;
+}
+
+.btn-icon {
+  width: 15px;
+  height: 15px;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #ffffff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--color-primary-hover);
+}
+
+.btn-primary:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.btn-outline {
+  background-color: #ffffff;
+  border-color: var(--color-border);
+  color: var(--color-text-muted);
+  font-size: 12px;
+  padding: 7px 12px;
+}
+
+.btn-outline:hover {
+  background-color: var(--color-bg-card);
+  color: var(--color-text-main);
+  border-color: #cbd5e1;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.app-footer {
+  margin-top: 4px;
+  border-top: 1px solid var(--color-border);
+  padding-top: 8px;
+}
+
+.safety-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  color: var(--color-text-muted);
+}
+
+.safety-icon {
+  width: 13px;
+  height: 13px;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+.hidden {
+  display: none !important;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-2px); }
+  to { opacity: 1; transform: translateY(0); }
+}
