@@ -17,16 +17,16 @@ class MockVisionProvider(VisionProvider):
             self._default_items = default_items
         else:
             self._default_items = [
-                AttendanceItem(raw_identifier="001", raw_name="Aarav Sharma", status=AttendanceStatus.PRESENT, confidence=0.98),
-                AttendanceItem(raw_identifier="002", raw_name="Rahul Kumar", status=AttendanceStatus.PRESENT, confidence=0.96),
-                AttendanceItem(raw_identifier="003", raw_name="Priya Singh", status=AttendanceStatus.ABSENT, confidence=0.94),
-                AttendanceItem(raw_identifier="004", raw_name="Ankit Sharma", status=AttendanceStatus.LATE, confidence=0.89),
-                AttendanceItem(raw_identifier="005", raw_name="Sneha Patel", status=AttendanceStatus.PRESENT, confidence=0.97),
-                AttendanceItem(raw_identifier="006", raw_name="Vikram Rao", status=AttendanceStatus.PRESENT, confidence=0.95),
-                AttendanceItem(raw_identifier="007", raw_name="Neha Gupta", status=AttendanceStatus.ABSENT, confidence=0.92),
-                AttendanceItem(raw_identifier="008", raw_name="Rohan Verma", status=AttendanceStatus.PRESENT, confidence=0.98),
-                AttendanceItem(raw_identifier="009", raw_name="Ananya Mishra", status=AttendanceStatus.PRESENT, confidence=0.96),
-                AttendanceItem(raw_identifier="010", raw_name="Aditya Joshi", status=AttendanceStatus.LATE, confidence=0.88),
+                AttendanceItem(raw_identifier="001", raw_name="Aarav Sharma", raw_attendance_mark="17", status=AttendanceStatus.PRESENT, confidence=0.98),
+                AttendanceItem(raw_identifier="002", raw_name="Rahul Kumar", raw_attendance_mark="A", status=AttendanceStatus.ABSENT, confidence=0.96),
+                AttendanceItem(raw_identifier="003", raw_name="Priya Singh", raw_attendance_mark="18", status=AttendanceStatus.PRESENT, confidence=0.94),
+                AttendanceItem(raw_identifier="004", raw_name="Ankit Sharma", raw_attendance_mark="A", status=AttendanceStatus.ABSENT, confidence=0.91),
+                AttendanceItem(raw_identifier="005", raw_name="Sneha Patel", raw_attendance_mark="19", status=AttendanceStatus.PRESENT, confidence=0.97),
+                AttendanceItem(raw_identifier="006", raw_name="Vikram Rao", raw_attendance_mark="20", status=AttendanceStatus.PRESENT, confidence=0.95),
+                AttendanceItem(raw_identifier="007", raw_name="Neha Gupta", raw_attendance_mark="A", status=AttendanceStatus.ABSENT, confidence=0.92),
+                AttendanceItem(raw_identifier="008", raw_name="Rohan Verma", raw_attendance_mark="21", status=AttendanceStatus.PRESENT, confidence=0.98),
+                AttendanceItem(raw_identifier="009", raw_name="Ananya Mishra", raw_attendance_mark="22", status=AttendanceStatus.PRESENT, confidence=0.96),
+                AttendanceItem(raw_identifier="010", raw_name="Aditya Joshi", raw_attendance_mark="A", status=AttendanceStatus.ABSENT, confidence=0.90),
             ]
 
     def extract_attendance(

@@ -34,7 +34,7 @@ def valid_demo_image_bytes() -> bytes:
         ("001", "Aarav Sharma", "Present"),
         ("002", "Rahul Kumar", "Present"),
         ("003", "Priya Singh", "Absent"),
-        ("004", "Ankit Sharma", "Late"),
+        ("004", "Ankit Sharma", "Absent"),
     ]
 
     for i, (roll, name, status) in enumerate(rows):

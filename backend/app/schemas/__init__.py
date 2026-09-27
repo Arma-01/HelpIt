@@ -6,6 +6,17 @@ from app.schemas.attendance import (
     ApiErrorDetail,
     ApiErrorResponse,
 )
+from app.schemas.student import (
+    MatchMethod,
+    ResolutionState,
+    StudentInfo,
+    MatchCandidate,
+    MatchingResultItem,
+    MatchingSummary,
+    MatchAttendanceRequest,
+    MatchingExceptionItem,
+    MatchAttendanceResponse,
+)
 
 __all__ = [
     "AttendanceStatus",
@@ -14,4 +25,13 @@ __all__ = [
     "AttendanceProcessResponse",
     "ApiErrorDetail",
     "ApiErrorResponse",
+    "MatchMethod",
+    "ResolutionState",
+    "StudentInfo",
+    "MatchCandidate",
+    "MatchingResultItem",
+    "MatchingSummary",
+    "MatchAttendanceRequest",
+    "MatchingExceptionItem",
+    "MatchAttendanceResponse",
 ]

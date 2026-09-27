@@ -28,14 +28,7 @@ class HybridVisionProvider(VisionProvider):
         image_bytes: bytes,
         filename: str,
     ) -> List[AttendanceItem]:
-        lower_name = filename.lower()
-        
-        # If the file is explicitly designated as mock or test demo without text
-        if "mock" in lower_name:
-            logger.info(f"[HybridProvider] Explicit mock file '{filename}', using MockVisionProvider")
-            return self._mock.extract_attendance(image, image_bytes, filename)
-
-        # Run primary neural EasyOCR
+        # Real uploaded attendance sheets are always processed by EasyOCR
         try:
             items = self._easyocr.extract_attendance(image, image_bytes, filename)
             if items:

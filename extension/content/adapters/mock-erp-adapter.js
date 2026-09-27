@@ -233,7 +233,7 @@
       const unmatched = [];
       const failed = [];
 
-      const validStatuses = ["PRESENT", "ABSENT", "LATE", "UNMARKED"];
+      const validStatuses = ["PRESENT", "ABSENT", "UNMARKED"];
 
       records.forEach((record) => {
         let matchedRow = null;

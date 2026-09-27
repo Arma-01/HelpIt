@@ -34,7 +34,9 @@ Test:
 
 Verify:
 
-- UNKNOWN never becomes ABSENT automatically
+- Only PRESENT and ABSENT statuses are supported (no LATE or UNKNOWN)
+- Low-confidence or unclear marks trigger review instead of inventing statuses
+- Missing ERP students are never automatically marked ABSENT
 - Wrong student cannot be silently selected
 - Final ERP submit is never automatically triggered
 

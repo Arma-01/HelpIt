@@ -1,5 +1,5 @@
 """
-Attendance image processing endpoint.
+Attendance image processing and student matching endpoints.
 """
 
 from fastapi import APIRouter, UploadFile, File, HTTPException, status
@@ -11,7 +11,12 @@ from app.schemas.attendance import (
     ApiErrorResponse,
     ApiErrorDetail,
 )
+from app.schemas.student import (
+    MatchAttendanceRequest,
+    MatchAttendanceResponse,
+)
 from app.services.attendance_service import attendance_service
+from app.services.matching_service import matching_service
 
 router = APIRouter()
 
@@ -64,3 +69,36 @@ async def process_attendance_image(
         )
     finally:
         await file.close()
+
+
+@router.post(
+    "/match",
+    response_model=MatchAttendanceResponse,
+    responses={
+        400: {"model": ApiErrorResponse, "description": "Invalid matching request payload"},
+        500: {"model": ApiErrorResponse, "description": "Internal matching engine error"},
+    },
+    summary="Match AI Attendance with ERP Students",
+    description="Deterministically match AI-extracted attendance records with the active ERP classroom student roster.",
+)
+async def match_attendance(request: MatchAttendanceRequest):
+    logger.info(
+        f"POST /api/v1/attendance/match received {len(request.ai_records)} AI records, "
+        f"{len(request.erp_students)} ERP students"
+    )
+
+    try:
+        response = matching_service.match_attendance(request)
+        return response
+    except Exception as exc:
+        logger.error(f"Unexpected error during student matching: {str(exc)}", exc_info=True)
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={
+                "success": False,
+                "error": {
+                    "code": "MATCHING_ERROR",
+                    "message": "An unexpected error occurred during student matching.",
+                },
+            },
+        )

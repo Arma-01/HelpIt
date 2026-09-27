@@ -40,18 +40,19 @@ Validation
 
 ## Supported Statuses
 
-PRESENT
-ABSENT
-LATE
-UNKNOWN
+The attendance system strictly supports ONLY TWO attendance statuses:
+- PRESENT
+- ABSENT
+
+LATE and UNKNOWN have been completely removed from backend models, API responses, and UI.
 
 ## Rules
 
-If attendance mark cannot be confidently detected:
+If an attendance mark cannot be confidently detected:
 
-status = UNKNOWN
-
-Do not guess.
+- The system assigns a best-effort status with LOW confidence (< 0.65).
+- Low confidence triggers teacher review (NEEDS_REVIEW) rather than inventing a third status.
+- Do not guess or silently reverse status.
 
 ## Confidence
 
@@ -61,10 +62,10 @@ Do not guess.
 
 Below 0.70 = LOW
 
-LOW confidence requires teacher review.
+LOW confidence marks (< 0.65) trigger teacher review.
 
 ## Important
 
 AI must never invent a student.
 
-AI must never silently convert UNKNOWN to ABSENT.
+Missing students must never be automatically marked ABSENT.

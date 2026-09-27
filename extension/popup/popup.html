@@ -22,7 +22,7 @@
           <span class="brand-subtitle">ERP Assistant</span>
         </div>
       </div>
-      <div class="header-badge" id="version-tag">Phase 1</div>
+      <div class="header-badge" id="version-tag">Phase 2</div>
     </header>
 
     <!-- Notification / Toast Banner -->
@@ -85,7 +85,7 @@
             <circle cx="12" cy="12" r="10"></circle>
             <polyline points="12 6 12 12 16 14"></polyline>
           </svg>
-          <span>Process Attendance</span>
+          <span>Process & Match</span>
         </button>
       </div>
     </section>
@@ -98,46 +98,102 @@
             <circle class="spinner-path" cx="25" cy="25" r="20" fill="none" stroke-width="4"></circle>
           </svg>
         </div>
-        <h2 class="processing-title">Processing attendance...</h2>
-        <p class="processing-subtitle">Analyzing image</p>
+        <h2 class="processing-title" id="processing-title">Processing attendance...</h2>
+        <p class="processing-subtitle" id="processing-subtitle">Analyzing image & matching with ERP roster</p>
         <p class="processing-note">Please wait.</p>
       </div>
     </section>
 
     <!-- Attendance Result Section (Hidden initially) -->
     <section class="section-card result-card hidden" id="result-section">
-      <div class="result-header">
-        <div>
-          <span class="section-label">Attendance Result</span>
-          <div class="result-records-text" id="result-records-count">0 records detected</div>
+      <!-- 1. Source of Truth: Uploaded Sheet -->
+      <div class="result-source-box">
+        <div class="result-source-header">
+          <div class="source-title-group">
+            <span class="source-indicator-dot"></span>
+            <span class="source-label">Attendance Source</span>
+          </div>
+          <span class="source-badge">Uploaded Sheet</span>
         </div>
-        <span class="badge-phase">AI Extracted</span>
-      </div>
-
-      <!-- Result Breakdown Stats Grid -->
-      <div class="stats-grid result-stats-grid">
-        <div class="stat-box stat-present">
-          <span class="stat-number" id="res-present">0</span>
-          <span class="stat-name">Present</span>
-        </div>
-        <div class="stat-box stat-absent">
-          <span class="stat-number" id="res-absent">0</span>
-          <span class="stat-name">Absent</span>
-        </div>
-        <div class="stat-box stat-late">
-          <span class="stat-number" id="res-late">0</span>
-          <span class="stat-name">Late</span>
-        </div>
-        <div class="stat-box stat-unknown">
-          <span class="stat-number" id="res-unknown">0</span>
-          <span class="stat-name">Unknown</span>
+        <div class="source-stats-row">
+          <div class="source-stat">
+            <span class="source-stat-val" id="source-detected-count">0</span>
+            <span class="source-stat-lbl">Students detected</span>
+          </div>
+          <div class="source-stat stat-pres-text">
+            <span class="source-stat-val" id="source-present-count">0</span>
+            <span class="source-stat-lbl">Present</span>
+          </div>
+          <div class="source-stat stat-abs-text">
+            <span class="source-stat-val" id="source-absent-count">0</span>
+            <span class="source-stat-lbl">Absent</span>
+          </div>
         </div>
       </div>
 
-      <!-- Detected Attendance List -->
+      <!-- 2. ERP Student List Reference -->
+      <div class="result-erp-box">
+        <div class="erp-ref-header">
+          <span class="erp-ref-label">ERP Student List</span>
+          <span class="erp-ref-badge" id="erp-roster-status-badge">Classroom Roster</span>
+        </div>
+        <div class="erp-ref-content">
+          <span class="erp-ref-text">Students available in ERP:</span>
+          <strong class="erp-ref-count" id="erp-students-available-count">0</strong>
+        </div>
+      </div>
+
+      <!-- 3. Matching Breakdown -->
+      <div class="matching-summary-box">
+        <div class="result-header">
+          <span class="section-label">Matching Summary</span>
+          <span class="badge-phase" id="result-badge-phase">Matching Complete</span>
+        </div>
+
+        <div class="matching-stats-grid">
+          <div class="match-stat-box match-stat-matched">
+            <div class="match-stat-icon">✓</div>
+            <div class="match-stat-count" id="match-count-matched">0</div>
+            <div class="match-stat-label">Matched</div>
+          </div>
+          <div class="match-stat-box match-stat-review">
+            <div class="match-stat-icon">⚠</div>
+            <div class="match-stat-count" id="match-count-review">0</div>
+            <div class="match-stat-label">Needs Review</div>
+          </div>
+          <div class="match-stat-box match-stat-unmatched">
+            <div class="match-stat-icon">?</div>
+            <div class="match-stat-count" id="match-count-unmatched">0</div>
+            <div class="match-stat-label">Unmatched</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exceptions & Missing Students Info Bar -->
+      <div class="exceptions-bar hidden" id="exceptions-bar">
+        <span class="exceptions-count-text" id="exceptions-count-text">0 Exceptions Detected</span>
+        <button type="button" class="btn-text-action" id="btn-toggle-exceptions">View Exceptions</button>
+      </div>
+
+      <!-- Collapsible Exceptions List Drawer -->
+      <div class="exceptions-drawer hidden" id="exceptions-drawer">
+        <ul class="exceptions-list" id="exceptions-list">
+          <!-- Populated dynamically -->
+        </ul>
+      </div>
+
+      <!-- Matched Students Roster Review Table -->
       <div class="detected-roster-box">
         <div class="detected-roster-header">
-          <span class="section-label">Detected Attendance</span>
+          <span class="section-label">Review Records</span>
+          <span class="roster-sub-hint">Verified against ERP</span>
+        </div>
+        <div class="roster-table-header">
+          <span class="col-head col-roll">Roll</span>
+          <span class="col-head col-name">Student</span>
+          <span class="col-head col-raw">Raw Mark</span>
+          <span class="col-head col-status">Status</span>
+          <span class="col-head col-match">Match</span>
         </div>
         <ul class="detected-roster-list" id="detected-roster-list">
           <!-- Populated dynamically -->
@@ -162,7 +218,7 @@
         <svg class="safety-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
         </svg>
-        <span>Phase 1: AI Result inspection only. Mock ERP fields remain unchanged.</span>
+        <span>Phase 2: Safe Matching & Exceptions only. Mock ERP attendance remains unchanged.</span>
       </div>
     </footer>
   </div>

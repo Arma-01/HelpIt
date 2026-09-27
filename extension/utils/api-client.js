@@ -71,6 +71,55 @@ class AttendanceApiClient {
 
     return data;
   }
+
+  /**
+   * Sends ERP students and AI attendance records to backend matching engine.
+   * @param {Array} erpStudents
+   * @param {Array} aiRecords
+   * @returns {Promise<Object>}
+   */
+  async matchAttendance(erpStudents, aiRecords) {
+    if (!erpStudents || !Array.isArray(erpStudents)) {
+      throw new Error("ERP students list is required for matching.");
+    }
+    if (!aiRecords || !Array.isArray(aiRecords)) {
+      throw new Error("AI attendance records are required for matching.");
+    }
+
+    let response;
+    try {
+      response = await fetch(`${this.baseUrl}/attendance/match`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          erp_students: erpStudents,
+          ai_records: aiRecords,
+        }),
+      });
+    } catch (networkErr) {
+      console.error("[AttendanceApiClient] Network error connecting to matching engine:", networkErr);
+      throw new Error("AI service is currently unavailable. Please verify backend is running on http://127.0.0.1:8000.");
+    }
+
+    let data;
+    try {
+      data = await response.json();
+    } catch (jsonErr) {
+      throw new Error("Unable to parse student matching response.");
+    }
+
+    if (!response.ok || !data || data.success === false) {
+      const message = data?.error?.message || "Student matching failed.";
+      const err = new Error(message);
+      err.code = data?.error?.code || "MATCHING_ERROR";
+      throw err;
+    }
+
+    return data;
+  }
 }
 
 if (typeof window !== "undefined") {

@@ -87,9 +87,21 @@ class AttendanceService:
                 # Ensure confidence is clamped between 0.0 and 1.0
                 clamped_conf = min(max(float(raw.confidence), 0.0), 1.0)
 
+                # Preserve raw attendance mark (e.g. '17', 'A', 'P')
+                raw_mark = getattr(raw, "raw_attendance_mark", None)
+                if raw_mark is not None:
+                    raw_mark = str(raw_mark).strip()
+
+                # Preserve raw student ID if extracted
+                raw_student_id = getattr(raw, "raw_student_id", None)
+                if raw_student_id is not None:
+                    raw_student_id = str(raw_student_id).strip()
+
                 item = AttendanceItem(
                     raw_name=raw.raw_name.strip() if raw.raw_name else None,
                     raw_identifier=raw.raw_identifier.strip() if raw.raw_identifier else None,
+                    raw_student_id=raw_student_id,
+                    raw_attendance_mark=raw_mark,
                     status=clean_status,
                     confidence=clamped_conf,
                 )
@@ -105,12 +117,13 @@ class AttendanceService:
 
         logger.info(
             f"Processing completed for {filename}: {summary.total_detected} total "
-            f"({summary.present} present, {summary.absent} absent, {summary.late} late, {summary.unknown} unknown)"
+            f"({summary.present} present, {summary.absent} absent)"
         )
 
         return AttendanceProcessResponse(
             success=True,
             attendance=validated_items,
+            records=validated_items,
             summary=summary,
         )
 

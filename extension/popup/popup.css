@@ -446,69 +446,157 @@ body {
   text-transform: uppercase;
 }
 
-.result-stats-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 6px;
-  margin-top: 4px;
+/* ==========================================================================
+   Attendance Source & ERP Reference Cards (Phase 2.2)
+   ========================================================================== */
+.result-source-box {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border: 1px solid #bae6fd;
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.stat-box {
+.result-source-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.source-title-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.source-indicator-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #0284c7;
+  box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.2);
+}
+
+.source-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #0369a1;
+}
+
+.source-badge {
+  font-size: 10px;
+  font-weight: 700;
+  background-color: #0284c7;
+  color: #ffffff;
+  padding: 2px 7px;
+  border-radius: 10px;
+  letter-spacing: 0.2px;
+}
+
+.source-stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
   background-color: #ffffff;
-  border: 1px solid var(--color-border);
+  border: 1px solid #e0f2fe;
   border-radius: var(--radius-sm);
-  padding: 6px 4px;
-  text-align: center;
+  padding: 6px 8px;
+}
+
+.source-stat {
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 }
 
-.stat-number {
+.source-stat-val {
   font-size: 16px;
   font-weight: 700;
   line-height: 1.2;
+  color: var(--color-text-main);
 }
 
-.stat-name {
-  font-size: 10px;
-  font-weight: 500;
+.source-stat-lbl {
+  font-size: 9px;
+  font-weight: 600;
   color: var(--color-text-muted);
+  text-transform: uppercase;
 }
 
-.stat-present {
-  border-top: 2px solid var(--color-success);
-}
-.stat-present .stat-number {
+.stat-pres-text .source-stat-val {
   color: var(--color-success);
 }
 
-.stat-absent {
-  border-top: 2px solid var(--color-danger);
-}
-.stat-absent .stat-number {
+.stat-abs-text .source-stat-val {
   color: var(--color-danger);
 }
 
-.stat-late {
-  border-top: 2px solid var(--color-warning);
-}
-.stat-late .stat-number {
-  color: var(--color-warning);
-}
-
-.stat-unknown {
-  border-top: 2px solid var(--color-neutral);
-}
-.stat-unknown .stat-number {
-  color: var(--color-neutral);
+/* ERP Student List Reference Box */
+.result-erp-box {
+  background-color: #f8fafc;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-/* Detected Roster List */
-.detected-roster-box {
+.erp-ref-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.erp-ref-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+.erp-ref-badge {
+  font-size: 9px;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background-color: #e2e8f0;
+  color: #475569;
+}
+
+.erp-ref-content {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.erp-ref-text {
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+.erp-ref-count {
+  font-size: 12px;
+  color: var(--color-text-main);
+}
+
+/* Matching Summary Box */
+.matching-summary-box {
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
+
+/* Detected Roster Review Table */
+.detected-roster-box {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
   margin-top: 4px;
 }
 
@@ -518,26 +606,136 @@ body {
   justify-content: space-between;
 }
 
+.roster-sub-hint {
+  font-size: 10px;
+  color: var(--color-text-light);
+  font-weight: 500;
+}
+
+.roster-table-header {
+  display: flex;
+  align-items: center;
+  padding: 6px 8px;
+  background-color: #f1f5f9;
+  border: 1px solid var(--color-border);
+  border-bottom: none;
+  border-top-left-radius: var(--radius-sm);
+  border-top-right-radius: var(--radius-sm);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--color-text-muted);
+}
+
+.col-head, .row-col {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.col-roll {
+  width: 36px;
+  flex-shrink: 0;
+}
+
+.col-name {
+  flex: 1;
+  min-width: 0;
+  padding: 0 4px;
+}
+
+.col-raw {
+  width: 52px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.col-status {
+  width: 64px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.col-match {
+  width: 74px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.raw-mark-pill {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: monospace;
+  padding: 1px 5px;
+  background-color: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 3px;
+  color: #334155;
+}
+
+.raw-mark-pill.mark-present {
+  background-color: #f0fdf4;
+  border-color: #bbf7d0;
+  color: #16a34a;
+}
+
+.raw-mark-pill.mark-absent {
+  background-color: #fef2f2;
+  border-color: #fecaca;
+  color: #dc2626;
+}
+
 .detected-roster-list {
   list-style: none;
-  max-height: 155px;
+  max-height: 175px;
   overflow-y: auto;
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
+  border-bottom-left-radius: var(--radius-sm);
+  border-bottom-right-radius: var(--radius-sm);
   background-color: #ffffff;
 }
 
-.detected-item {
+.roster-row-container {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 5px 8px;
+  flex-direction: column;
   border-bottom: 1px solid var(--color-border-subtle);
-  font-size: 12px;
 }
 
-.detected-item:last-child {
+.roster-row-container:last-child {
   border-bottom: none;
+}
+
+.roster-row {
+  display: flex;
+  align-items: center;
+  padding: 5px 8px;
+  font-size: 11px;
+  background-color: #ffffff;
+  transition: background-color 0.1s ease;
+}
+
+.roster-row:hover {
+  background-color: #f8fafc;
+}
+
+.student-display-name {
+  font-weight: 600;
+  color: var(--color-text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.raw-ai-name {
+  font-size: 9px;
+  color: var(--color-text-light);
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .detected-student-info {
@@ -695,4 +893,256 @@ body {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-2px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   Phase 2: Matching Summary & Exceptions Styles
+   ========================================================================== */
+.matching-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.match-stat-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 4px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-card);
+  text-align: center;
+}
+
+.match-stat-icon {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.match-stat-count {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.match-stat-label {
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-top: 2px;
+}
+
+.match-stat-matched {
+  background-color: var(--color-success-bg);
+  border-color: #bbf7d0;
+  color: var(--color-success);
+}
+
+.match-stat-review {
+  background-color: var(--color-warning-bg);
+  border-color: #fde68a;
+  color: var(--color-warning);
+}
+
+.match-stat-unmatched {
+  background-color: var(--color-neutral-bg);
+  border-color: #e2e8f0;
+  color: var(--color-neutral);
+}
+
+.exceptions-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+  padding: 6px 10px;
+  background-color: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: var(--radius-md);
+  font-size: 11px;
+}
+
+.exceptions-count-text {
+  font-weight: 600;
+  color: #92400e;
+}
+
+.exceptions-drawer {
+  margin-top: 6px;
+  padding: 8px;
+  background-color: #fefce8;
+  border: 1px solid #fef08a;
+  border-radius: var(--radius-md);
+  max-height: 140px;
+  overflow-y: auto;
+}
+
+.exceptions-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.exception-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 11px;
+  line-height: 1.3;
+  padding-bottom: 4px;
+  border-bottom: 1px dashed #fde68a;
+}
+
+.exception-item:last-child {
+  border-bottom: none;
+}
+
+.exception-badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  width: fit-content;
+}
+
+.exception-badge-dup {
+  background-color: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+.exception-badge-ambig {
+  background-color: #fffbeb;
+  color: #d97706;
+  border: 1px solid #fde68a;
+}
+
+.exception-badge-unmatched {
+  background-color: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+}
+
+.exception-badge-missing {
+  background-color: #e0f2fe;
+  color: #0284c7;
+  border: 1px solid #bae6fd;
+}
+
+.exception-msg {
+  color: var(--color-text-main);
+  font-weight: 500;
+}
+
+/* Matched Roster Item Details */
+.detected-match-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  overflow: hidden;
+}
+
+.matched-primary-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.matched-student-name {
+  font-weight: 600;
+  color: var(--color-text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.matched-student-id {
+  font-size: 10px;
+  font-family: monospace;
+  background-color: var(--color-neutral-bg);
+  padding: 1px 4px;
+  border-radius: 3px;
+  color: var(--color-text-muted);
+}
+
+.raw-detected-row {
+  font-size: 10px;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.candidates-preview-box {
+  margin-top: 4px;
+  font-size: 10px;
+  background-color: #fffbeb;
+  border-radius: 4px;
+  padding: 4px 6px;
+  color: #92400e;
+}
+
+.candidate-entry {
+  display: flex;
+  justify-content: space-between;
+  padding: 1px 0;
+}
+
+/* Badges for Resolution & Method */
+.badge-resolution-matched {
+  background-color: #f0fdf4;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+}
+
+.badge-resolution-review {
+  background-color: #fffbeb;
+  color: #d97706;
+  border: 1px solid #fde68a;
+}
+
+.badge-resolution-unmatched {
+  background-color: #f1f5f9;
+  color: #64748b;
+  border: 1px solid #cbd5e1;
+}
+
+.match-method-pill {
+  font-size: 9px;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background-color: #f0f9ff;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+}
+
+.dual-conf-container {
+  display: flex;
+  gap: 3px;
+}
+
+.conf-tag {
+  font-size: 9px;
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-family: monospace;
+}
+
+.conf-tag-ai {
+  background-color: #f8fafc;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
+
+.conf-tag-match {
+  background-color: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
 }

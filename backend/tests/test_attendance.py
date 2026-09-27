@@ -31,17 +31,17 @@ class TestAttendanceEndpoint:
         # Validate item structure
         for item in data["attendance"]:
             assert "status" in item
-            assert item["status"] in ["PRESENT", "ABSENT", "LATE", "UNKNOWN"]
+            assert item["status"] in ["PRESENT", "ABSENT"]
             assert 0.0 <= item["confidence"] <= 1.0
             assert "raw_name" in item
             assert "raw_identifier" in item
 
-        # Validate summary
+        # Validate summary: strictly PRESENT and ABSENT
         summary = data["summary"]
         assert summary["total_detected"] == len(data["attendance"])
-        assert summary["total_detected"] == (
-            summary["present"] + summary["absent"] + summary["late"] + summary["unknown"]
-        )
+        assert summary["total_detected"] == (summary["present"] + summary["absent"])
+        assert "late" not in summary
+        assert "unknown" not in summary
 
     def test_2_invalid_file(self, client: TestClient, corrupted_image_bytes: bytes):
         """Test 2: Invalid/corrupt file returns 4xx error with structured code."""
@@ -111,31 +111,27 @@ class TestAttendanceEndpoint:
         finally:
             attendance_service.provider = original_provider
 
-    def test_6_unknown_status_preservation(self):
-        """Test 6: Safety rule - UNKNOWN must NEVER be converted to ABSENT."""
-        # 1. Direct from_str normalization check
-        assert AttendanceStatus.from_str("UNKNOWN") == AttendanceStatus.UNKNOWN
-        assert AttendanceStatus.from_str("?") == AttendanceStatus.UNKNOWN
-        assert AttendanceStatus.from_str("ambiguous") == AttendanceStatus.UNKNOWN
-        assert AttendanceStatus.from_str("unclear") == AttendanceStatus.UNKNOWN
-        assert AttendanceStatus.from_str("") == AttendanceStatus.UNKNOWN
-        assert AttendanceStatus.from_str(None) == AttendanceStatus.UNKNOWN
+    def test_6_strict_present_absent_vocabulary(self):
+        """Test 6: Strict PRESENT/ABSENT normalization and rejection of invalid statuses."""
+        # Present normalization
+        assert AttendanceStatus.from_str("P") == AttendanceStatus.PRESENT
+        assert AttendanceStatus.from_str("Present") == AttendanceStatus.PRESENT
+        assert AttendanceStatus.from_str("✓") == AttendanceStatus.PRESENT
+        assert AttendanceStatus.from_str("v") == AttendanceStatus.PRESENT
+        assert AttendanceStatus.from_str("1") == AttendanceStatus.PRESENT
 
-        # 2. Pipeline processing check with an uncertain row
-        service = AttendanceService()
-        mock_provider = MagicMock()
-        mock_provider.extract_attendance.return_value = [
-            AttendanceItem(raw_identifier="021", raw_name="John Doe", status=AttendanceStatus.UNKNOWN, confidence=0.45)
-        ]
-        service._provider = mock_provider
+        # Absent normalization
+        assert AttendanceStatus.from_str("A") == AttendanceStatus.ABSENT
+        assert AttendanceStatus.from_str("Absent") == AttendanceStatus.ABSENT
+        assert AttendanceStatus.from_str("✗") == AttendanceStatus.ABSENT
+        assert AttendanceStatus.from_str("X") == AttendanceStatus.ABSENT
+        assert AttendanceStatus.from_str("0") == AttendanceStatus.ABSENT
 
-        # Create dummy valid image bytes
-        from PIL import Image
-        buf = io.BytesIO()
-        Image.new("RGB", (100, 100)).save(buf, format="JPEG")
-        
-        result = service.process_image(buf.getvalue(), "test.jpg", "image/jpeg")
-        assert result.attendance[0].status == AttendanceStatus.UNKNOWN
-        assert result.attendance[0].status != AttendanceStatus.ABSENT
-        assert result.summary.unknown == 1
-        assert result.summary.absent == 0
+        # Unrecognized marks must raise ValueError
+        import pytest
+        with pytest.raises(ValueError):
+            AttendanceStatus.from_str("LATE")
+        with pytest.raises(ValueError):
+            AttendanceStatus.from_str("UNKNOWN")
+        with pytest.raises(ValueError):
+            AttendanceStatus.from_str("MAYBE_PRESENT")

@@ -11,8 +11,8 @@ FastAPI backend providing the Phase 1 image processing pipeline for attendance s
   - `MockVisionProvider`: Deterministic synthetic provider for instant testing/demos.
   - `HybridVisionProvider`: Production default combining local neural OCR with robust fallback handling.
 - **Strict Attendance Normalization**:
-  - Standardizes to: `PRESENT`, `ABSENT`, `LATE`, `UNKNOWN`.
-  - Unclear or ambiguous marks remain `UNKNOWN` (never converted to `ABSENT`).
+  - Standardizes strictly to: `PRESENT` and `ABSENT` (LATE and UNKNOWN completely removed).
+  - Unclear or low-confidence marks trigger review without inventing a third status.
 - **Privacy-Conscious**: In-memory stream processing without permanent image retention or sensitive data logging.
 
 ## Getting Started
